@@ -1,8 +1,7 @@
 # OTIF Root-Cause Engine
 
-<!-- TODO: replace <GITHUB_OWNER>/<GITHUB_REPO> once the repo is created, to match the clone URL below and DEPLOY.md -->
-[![tests](https://github.com/<GITHUB_OWNER>/<GITHUB_REPO>/actions/workflows/tests.yml/badge.svg)](https://github.com/<GITHUB_OWNER>/<GITHUB_REPO>/actions/workflows/tests.yml)
-[![frontend](https://github.com/<GITHUB_OWNER>/<GITHUB_REPO>/actions/workflows/frontend.yml/badge.svg)](https://github.com/<GITHUB_OWNER>/<GITHUB_REPO>/actions/workflows/frontend.yml)
+[![tests](https://github.com/Prajwal210lm/otif-root-cause-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/Prajwal210lm/otif-root-cause-engine/actions/workflows/tests.yml)
+[![frontend](https://github.com/Prajwal210lm/otif-root-cause-engine/actions/workflows/frontend.yml/badge.svg)](https://github.com/Prajwal210lm/otif-root-cause-engine/actions/workflows/frontend.yml)
 
 **When a delivery fails, four teams blame each other. This finds who's right.**
 
@@ -47,7 +46,7 @@ Each agent sees only its own team's evidence for an order and files a claim: mai
 ## Quickstart
 
 ```bash
-git clone <GITHUB_REPO_URL>
+git clone https://github.com/Prajwal210lm/otif-root-cause-engine.git
 cd otif-root-cause-engine
 
 # Backend + engine

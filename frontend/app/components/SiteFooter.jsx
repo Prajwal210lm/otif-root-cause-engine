@@ -16,8 +16,7 @@ const TOOLS = [
   { name: "Project four", href: null, status: "in progress", desc: "ask the supply chain questions in plain English, get grounded answers with a chart." },
 ];
 
-// TODO: set to the public repository URL once created; the link stays hidden until then.
-const GITHUB_URL = null;
+const GITHUB_URL = "https://github.com/Prajwal210lm/otif-root-cause-engine";
 const LINKEDIN_URL = "https://www.linkedin.com/in/prajwal-b-006050228/";
 
 export default function SiteFooter() {
