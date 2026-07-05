@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #F4F6F8;
+  --surface: #FFFFFF;
+  --ink: #14181F;
+  --muted: #5B6470;
+  --hairline: #E2E6EB;
+  --accent: #0B5E55;
+  --accent-soft: #9FD6CE;
+  --supplier: #C0552F;
+  --demand: #2F6D9E;
+  --warehouse: #6E5B96;
+  --logistics: #B08738;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-hairline: var(--hairline);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-supplier: var(--supplier);
+  --color-demand: var(--demand);
+  --color-warehouse: var(--warehouse);
+  --color-logistics: var(--logistics);
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--canvas); color: var(--ink); font-family: var(--font-sans); }
+
+/* offset anchored sections so the sticky telemetry bar never covers a heading */
+section[id], main[id] { scroll-margin-top: 4.5rem; }
+
+/* mono eyebrow/label utility used across the site */
+.eyebrow { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; color: var(--muted); }
+.tnum { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+
+/* ---- design-lead additions (flagged in report) ---- */
+
+/* visible keyboard focus everywhere (quality floor) */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* faint engineered dot-grid backdrop for the hero region */
+.field-grid {
+  background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
+  background-size: 26px 26px;
+  background-position: -1px -1px;
+}
+
+/* dark technical grid inside the pipeline console panel */
+.console-grid {
+  background-color: #0F1318;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* honour reduced-motion for CSS-driven motion (framer/SMIL handled in JS) */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

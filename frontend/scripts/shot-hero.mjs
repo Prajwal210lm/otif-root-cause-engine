@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+import { mkdirSync } from "node:fs";
+const OUT = process.env.SHOT_DIR || "./.shots";
+mkdirSync(OUT, { recursive: true });
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 980 }, deviceScaleFactor: 2 });
+const page = await ctx.newPage();
+await page.goto(process.env.SHOT_URL || "http://localhost:3000", { waitUntil: "networkidle" });
+await page.waitForTimeout(3500);
+await page.locator("section.field-grid").screenshot({ path: `${OUT}/sec-hero.png` });
+console.log("saved sec-hero.png");
+await ctx.close();
+await browser.close();

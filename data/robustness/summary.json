@@ -1,0 +1,73 @@
+{
+  "seeds": [
+    {
+      "seed": 42,
+      "overall_accuracy": 0.95,
+      "clean_accuracy": 1.0,
+      "ambiguous_accuracy": 0.78125,
+      "naive_ambiguous_accuracy": 0.53125,
+      "lift_ambiguous": 0.25,
+      "n_ambiguous": 32,
+      "ambiguous_correct": 25
+    },
+    {
+      "seed": 43,
+      "overall_accuracy": 0.9857142857142858,
+      "clean_accuracy": 1.0,
+      "ambiguous_accuracy": 0.9393939393939394,
+      "naive_ambiguous_accuracy": 0.6060606060606061,
+      "lift_ambiguous": 0.33333333333333337,
+      "n_ambiguous": 33,
+      "ambiguous_correct": 31
+    },
+    {
+      "seed": 44,
+      "overall_accuracy": 0.9714285714285714,
+      "clean_accuracy": 1.0,
+      "ambiguous_accuracy": 0.8918918918918919,
+      "naive_ambiguous_accuracy": 0.5675675675675675,
+      "lift_ambiguous": 0.32432432432432434,
+      "n_ambiguous": 37,
+      "ambiguous_correct": 33
+    },
+    {
+      "seed": 45,
+      "overall_accuracy": 0.9785714285714285,
+      "clean_accuracy": 1.0,
+      "ambiguous_accuracy": 0.9032258064516129,
+      "naive_ambiguous_accuracy": 0.5483870967741935,
+      "lift_ambiguous": 0.3548387096774194,
+      "n_ambiguous": 31,
+      "ambiguous_correct": 28
+    },
+    {
+      "seed": 46,
+      "overall_accuracy": 0.9571428571428572,
+      "clean_accuracy": 1.0,
+      "ambiguous_accuracy": 0.8333333333333334,
+      "naive_ambiguous_accuracy": 0.6111111111111112,
+      "lift_ambiguous": 0.2222222222222222,
+      "n_ambiguous": 36,
+      "ambiguous_correct": 30
+    },
+    {
+      "seed": 47,
+      "overall_accuracy": 0.95,
+      "clean_accuracy": 1.0,
+      "ambiguous_accuracy": 0.78125,
+      "naive_ambiguous_accuracy": 0.84375,
+      "lift_ambiguous": -0.0625,
+      "n_ambiguous": 32,
+      "ambiguous_correct": 25
+    }
+  ],
+  "aggregate": {
+    "mean_ambiguous_accuracy": 0.855057495178463,
+    "min_ambiguous_accuracy": 0.78125,
+    "max_ambiguous_accuracy": 0.9393939393939394,
+    "mean_overall_accuracy": 0.9654761904761905,
+    "mean_lift_ambiguous": 0.23703643159288323
+  },
+  "canonical_seed": 46,
+  "selection_rule": "canonical_seed is the seed whose ambiguous_accuracy is closest to mean_ambiguous_accuracy across all six independently generated batches"
+}

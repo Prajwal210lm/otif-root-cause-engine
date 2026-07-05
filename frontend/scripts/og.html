@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #F4F6F8;
+    background-image: radial-gradient(#E2E6EB 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: #14181F;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 64px 72px 56px;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 20px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #5B6470;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .mark { width: 26px; height: 26px; border-radius: 6px; background: #0B5E55; position: relative; }
+  .mark::after { content: ""; position: absolute; inset: 8px; border-radius: 2px; background: #9FD6CE; }
+  h1 { font-size: 76px; font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; max-width: 900px; }
+  h1 .accent { color: #0B5E55; }
+  .bottom { display: flex; align-items: flex-end; justify-content: space-between; }
+  .stat { display: flex; align-items: baseline; gap: 16px; }
+  .stat .big { font-family: "IBM Plex Mono", monospace; font-size: 64px; font-weight: 600; color: #0B5E55; }
+  .stat .label { font-size: 26px; color: #5B6470; max-width: 320px; line-height: 1.25; }
+  /* simplified pipeline motif */
+  svg { display: block; }
+</style>
+</head>
+<body>
+  <div class="eyebrow"><span class="mark"></span> OTIF Root-Cause Engine · Case file</div>
+  <h1>Name the cause of every failed delivery. <span class="accent">Down to the dirham.</span></h1>
+  <div class="bottom">
+    <div class="stat">
+      <span class="big">98.6%</span>
+      <span class="label">accurate on 140 failed orders</span>
+    </div>
+    <svg width="420" height="150" viewBox="0 0 420 150">
+      <rect x="0" y="59" width="84" height="32" rx="7" fill="#14181F"/>
+      <path d="M84,75 C130,75 130,20 168,20" fill="none" stroke="#2F6D9E" stroke-width="3.5" opacity="0.85"/>
+      <path d="M84,75 C130,75 130,57 168,57" fill="none" stroke="#C0552F" stroke-width="3.5" opacity="0.85"/>
+      <path d="M84,75 C130,75 130,94 168,94" fill="none" stroke="#6E5B96" stroke-width="3.5" opacity="0.85"/>
+      <path d="M84,75 C130,75 130,131 168,131" fill="none" stroke="#B08738" stroke-width="3.5" opacity="0.85"/>
+      <circle cx="182" cy="20" r="11" fill="#2F6D9E"/>
+      <circle cx="182" cy="57" r="11" fill="#C0552F"/>
+      <circle cx="182" cy="94" r="11" fill="#6E5B96"/>
+      <circle cx="182" cy="131" r="11" fill="#B08738"/>
+      <path d="M196,20 C250,20 250,75 292,75" fill="none" stroke="#2F6D9E" stroke-width="3.5" opacity="0.85"/>
+      <path d="M196,57 C250,57 250,75 292,75" fill="none" stroke="#C0552F" stroke-width="3.5" opacity="0.85"/>
+      <path d="M196,94 C250,94 250,75 292,75" fill="none" stroke="#6E5B96" stroke-width="3.5" opacity="0.85"/>
+      <path d="M196,131 C250,131 250,75 292,75" fill="none" stroke="#B08738" stroke-width="3.5" opacity="0.85"/>
+      <rect x="292" y="55" width="128" height="40" rx="8" fill="#0B5E55"/>
+      <text x="356" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="600" fill="#FFFFFF" letter-spacing="0.08em">VERDICT</text>
+    </svg>
+  </div>
+</body>
+</html>
