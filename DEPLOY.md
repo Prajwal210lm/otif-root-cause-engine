@@ -45,6 +45,7 @@ a Next.js project).
 | Variable | Notes |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | The Railway backend's public URL, e.g. `https://otif-api.up.railway.app`. If unset, the site still works: it serves the bundled canonical result with zero network calls, and the "Run a fresh analysis" control never appears (there is no `localhost` fallback in production). |
+| `NEXT_PUBLIC_API_SECRET` | Must exactly match the backend's `API_SECRET`. Sent as the `x-api-secret` header on every fresh-run request. If it's missing or wrong, every click of "Run a fresh analysis" fails with a 403 (shown as a distinct, calm error only after that click — never on page load). |
 
 **Manual promote step:** Vercel does not automatically serve the newest commit on the
 production domain unless the project is on auto-deploy for the production branch. After a

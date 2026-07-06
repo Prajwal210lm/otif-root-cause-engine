@@ -67,6 +67,7 @@ function FreshRunProgress() {
 // No default: if the env isn't set (e.g. a deploy without a backend) we never
 // fire stray requests and the live-run control simply doesn't appear.
 const API = process.env.NEXT_PUBLIC_API_URL || "";
+const API_SECRET = process.env.NEXT_PUBLIC_API_SECRET || "";
 const FRESH_TIMEOUT_MS = 90_000;
 
 function normalize(json) {
@@ -102,6 +103,7 @@ const ERROR_COPY = {
   timeout: "The live run timed out after 90 seconds. Showing the saved result.",
   model: "The model returned an invalid result on this run. Showing the saved result.",
   withheld: "The run was withheld by a validation check. Showing the saved result.",
+  auth: "The live run isn't configured correctly on this deployment. Showing the saved result.",
   network: "Couldn't reach the live model. Showing the saved result.",
 };
 
@@ -138,10 +140,15 @@ export default function LiveConsole() {
       const r = await fetch(`${API}/api/analyze?fresh=true&seed=${seed}&n=12`, {
         method: "POST",
         signal: ctrl.signal,
+        headers: { "x-api-secret": API_SECRET },
       });
       if (!mounted.current) return;
       if (r.status === 502) {
         setErrKind("model");
+        return;
+      }
+      if (r.status === 403) {
+        setErrKind("auth");
         return;
       }
       if (!r.ok) {
