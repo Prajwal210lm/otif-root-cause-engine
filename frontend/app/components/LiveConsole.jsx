@@ -67,7 +67,6 @@ function FreshRunProgress() {
 // No default: if the env isn't set (e.g. a deploy without a backend) we never
 // fire stray requests and the live-run control simply doesn't appear.
 const API = process.env.NEXT_PUBLIC_API_URL || "";
-const API_SECRET = process.env.NEXT_PUBLIC_API_SECRET || "";
 const FRESH_TIMEOUT_MS = 90_000;
 
 function normalize(json) {
@@ -137,10 +136,9 @@ export default function LiveConsole() {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), FRESH_TIMEOUT_MS);
     try {
-      const r = await fetch(`${API}/api/analyze?fresh=true&seed=${seed}&n=12`, {
+      const r = await fetch(`/api/analyze?seed=${seed}&n=12`, {
         method: "POST",
         signal: ctrl.signal,
-        headers: { "x-api-secret": API_SECRET },
       });
       if (!mounted.current) return;
       if (r.status === 502) {
