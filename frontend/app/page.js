@@ -139,6 +139,7 @@ export default function Home() {
                     sub={s.sub}
                     accent={s.accent}
                     size="lg"
+                    count={false}
                   />
                 </div>
               ))}
