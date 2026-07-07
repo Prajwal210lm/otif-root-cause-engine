@@ -11,14 +11,16 @@ When a distributor's on-time-in-full (OTIF) rate slips, every failed order has f
 
 | Metric | Value |
 |---|---|
-| Overall attribution accuracy | **98.6%** (138 of 140) |
-| Easy orders (one clear cause) | **100%** |
-| Hard orders (two causes at once, 32 of them) | **93.8%** (30 of 32) |
-| Naive "blame the biggest number" baseline on the same hard orders | 53.1% (17 of 32) |
-| Lift where the problem is actually hard | **+40.6 points** |
-| Failure value attributed | **AED 1,254,398** across 140 failed orders |
+| Overall attribution accuracy | **95.7%** (134 of 140) |
+| Easy orders (one clear cause) | **100%** (104 of 104) |
+| Hard orders (two causes at once, 36 of them) | **83.3%** (30 of 36) |
+| Naive "blame the biggest number" baseline on the same hard orders | 61.1% (22 of 36) |
+| Lift where the problem is actually hard | **+22.2 points** |
+| Failure value attributed | **AED 1,226,642** across 140 failed orders |
 
-Where the money went, by attributed cause: supplier AED 487,345 (38.9%, 47 orders), demand AED 347,839 (27.7%, 39), warehouse AED 322,792 (25.7%, 36), logistics AED 96,421 (7.7%, 18).
+Where the money went, by attributed cause: supplier AED 477,794 (39.0%, 51 orders), warehouse AED 313,864 (25.6%, 37), demand AED 282,823 (23.1%, 28), logistics AED 152,160 (12.4%, 24).
+
+**Robustness, across 6 independently generated batches (seeds 42-47):** mean accuracy on hard orders is **85.5%** (range 78.1-93.9%), against 53.1-84.4% for the naive baseline over the same six batches. One batch (seed 47) is a case where the naive rule actually won; it stays in the record rather than getting dropped. The seed 46 batch above is the run closest to the six-seed mean, which is why it is the one featured throughout.
 
 ## The pipeline
 

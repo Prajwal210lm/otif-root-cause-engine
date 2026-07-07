@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Wordmark from "./Wordmark";
 
 const NAV = [
   { href: "/problem", label: "The Problem", n: "01" },
@@ -17,19 +18,13 @@ export default function SiteNav() {
   const isActive = (href) => path === href;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center justify-between px-5 md:px-8">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="OTIF Root-Cause Engine, home">
-          <span aria-hidden className="grid h-5 w-5 place-items-center rounded-[4px] border border-accent/50">
-            <span className="h-2 w-2 rounded-[2px] bg-accent" />
-          </span>
-          <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-ink">
-            <span className="font-semibold">OTIF</span>
-            <span className="hidden text-muted sm:inline"> · root-cause engine</span>
-          </span>
+        <Link href="/" aria-label="OTIF Root-Cause Engine, home" className="rounded-sm">
+          <Wordmark />
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {NAV.map((item) => (
             <Link
               key={item.href}
@@ -41,7 +36,7 @@ export default function SiteNav() {
             >
               {item.label}
               {isActive(item.href) && (
-                <span className="absolute -bottom-[18px] left-0 h-px w-full bg-accent" />
+                <span aria-hidden className="absolute -bottom-[19px] left-0 h-[2px] w-full bg-accent" />
               )}
             </Link>
           ))}
@@ -66,19 +61,19 @@ export default function SiteNav() {
       </div>
 
       {open && (
-        <nav className="border-t border-hairline bg-canvas px-5 py-3 md:hidden" aria-label="Mobile">
+        <nav className="border-t border-hairline bg-canvas px-5 py-2 md:hidden" aria-label="Mobile">
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between border-b border-hairline py-3 font-mono text-[12px] uppercase tracking-[0.12em] ${
+                  className={`flex items-center justify-between border-b border-hairline py-3.5 font-mono text-[12px] uppercase tracking-[0.12em] ${
                     isActive(item.href) ? "text-accent" : "text-ink"
                   }`}
                 >
                   <span>{item.label}</span>
-                  <span className="tnum text-muted">§{item.n}</span>
+                  <span className="tnum text-faint">§{item.n}</span>
                 </Link>
               </li>
             ))}

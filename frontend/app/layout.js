@@ -17,7 +17,6 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  // TODO: update to the final production domain at deploy time
   metadataBase: new URL("https://otif-root-cause-engine.vercel.app"),
   title: "OTIF Root-Cause Engine · multi-agent failure attribution",
   description:

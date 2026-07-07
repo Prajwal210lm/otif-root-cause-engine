@@ -102,11 +102,17 @@ export const ROBUSTNESS_SEEDS = robustness.seeds.map((r) => ({
   liftPct: pctOf(r.lift_ambiguous),
 }));
 
+const naivePcts = robustness.seeds.map((r) => pctOf(r.naive_ambiguous_accuracy));
+
 export const ROBUSTNESS_METRICS = {
   meanAmbiguousPct: pctOf(robustness.aggregate.mean_ambiguous_accuracy),
   minAmbiguousPct: pctOf(robustness.aggregate.min_ambiguous_accuracy),
   maxAmbiguousPct: pctOf(robustness.aggregate.max_ambiguous_accuracy),
   meanLiftPct: pctOf(robustness.aggregate.mean_lift_ambiguous),
+  meanOverallPct: pctOf(robustness.aggregate.mean_overall_accuracy),
+  // naive baseline spread across the same six batches (derived, not hardcoded)
+  naiveMinPct: Math.min(...naivePcts),
+  naiveMaxPct: Math.max(...naivePcts),
   seedCount: robustness.seeds.length,
 };
 

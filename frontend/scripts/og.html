@@ -3,43 +3,49 @@
 <head>
 <meta charset="utf-8" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@600;700&display=swap" rel="stylesheet" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: 1200px; height: 630px; overflow: hidden;
-    background: #F4F6F8;
-    background-image: radial-gradient(#E2E6EB 1.5px, transparent 1.5px);
-    background-size: 30px 30px;
+    background: #EBEEF3;
+    background-image: radial-gradient(#CDD4DD 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
     font-family: "IBM Plex Sans", sans-serif;
     color: #14181F;
     display: flex; flex-direction: column; justify-content: space-between;
-    padding: 64px 72px 56px;
+    padding: 62px 72px 54px;
+    position: relative;
   }
-  .eyebrow {
-    font-family: "IBM Plex Mono", monospace; font-size: 20px; font-weight: 500;
-    letter-spacing: 0.16em; text-transform: uppercase; color: #5B6470;
+  .kicker {
+    font-family: "IBM Plex Mono", monospace; font-size: 19px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: #636A79;
     display: flex; align-items: center; gap: 14px;
   }
   .mark { width: 26px; height: 26px; border-radius: 6px; background: #0B5E55; position: relative; }
   .mark::after { content: ""; position: absolute; inset: 8px; border-radius: 2px; background: #9FD6CE; }
-  h1 { font-size: 76px; font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; max-width: 900px; }
+  h1 { font-size: 74px; font-weight: 700; line-height: 1.03; letter-spacing: -0.025em; max-width: 940px; }
   h1 .accent { color: #0B5E55; }
   .bottom { display: flex; align-items: flex-end; justify-content: space-between; }
-  .stat { display: flex; align-items: baseline; gap: 16px; }
-  .stat .big { font-family: "IBM Plex Mono", monospace; font-size: 64px; font-weight: 600; color: #0B5E55; }
-  .stat .label { font-size: 26px; color: #5B6470; max-width: 320px; line-height: 1.25; }
-  /* simplified pipeline motif */
+  .stat { display: flex; align-items: baseline; gap: 18px; }
+  .stat .big { font-family: "IBM Plex Mono", monospace; font-size: 66px; font-weight: 700; color: #0B5E55; letter-spacing: -0.03em; }
+  .stat .label { font-size: 25px; color: #565E6E; max-width: 330px; line-height: 1.25; }
   svg { display: block; }
+  /* registration ticks */
+  .tick { position: absolute; width: 16px; height: 16px; border: 2px solid #CDD4DD; }
+  .tl { top: 30px; left: 30px; border-width: 2px 0 0 2px; }
+  .br { bottom: 30px; right: 30px; border-width: 0 2px 2px 0; }
 </style>
 </head>
 <body>
-  <div class="eyebrow"><span class="mark"></span> OTIF Root-Cause Engine · Case file</div>
-  <h1>Name the cause of every failed delivery. <span class="accent">Down to the dirham.</span></h1>
+  <span class="tick tl"></span>
+  <span class="tick br"></span>
+  <div class="kicker"><span class="mark"></span> OTIF Root-Cause Engine · multi-agent attribution</div>
+  <h1>When a delivery fails, four teams blame each other. <span class="accent">This names who&rsquo;s right, ranked by cash.</span></h1>
   <div class="bottom">
     <div class="stat">
-      <span class="big">98.6%</span>
-      <span class="label">accurate on 140 failed orders</span>
+      <span class="big" id="ogstat">95.7%</span>
+      <span class="label" id="oglabel">accurate across 140 failed orders</span>
     </div>
     <svg width="420" height="150" viewBox="0 0 420 150">
       <rect x="0" y="59" width="84" height="32" rx="7" fill="#14181F"/>

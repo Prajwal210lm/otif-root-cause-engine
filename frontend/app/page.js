@@ -1,54 +1,93 @@
-import Link from "next/link";
 import PipelineConsole from "./components/PipelineConsole";
-import StatStrip from "./components/StatStrip";
-import ExplainerSection from "./components/ExplainerSection";
 import RouteCards from "./components/RouteCards";
-import { CompanyProfile } from "./components/DataNote";
+import Kicker from "./components/Kicker";
+import Button from "./components/Button";
+import Stat from "./components/Stat";
+import Reveal from "./components/Reveal";
+import SectionHeader from "./components/SectionHeader";
+import DriverLegend from "./components/DriverLegend";
 import { COMPANY } from "./lib/company";
-import { DRIVER_ORDER, DRIVERS, METRICS, fmtAED, fmtAEDk, fmtAEDm } from "./lib/otif";
+import { METRICS, ROBUSTNESS_METRICS, fmtAEDm } from "./lib/otif";
 
 export const metadata = {
   title: "OTIF Root-Cause Engine · when a delivery fails, this finds who's right",
-  description: `Four AI agents investigate every failed delivery in parallel and name the cause, ranked by cash. ${METRICS.overallPct}% accurate on ${METRICS.orders} orders. A portfolio case study for GCC distribution.`,
+  description: `Four specialist AI agents investigate every failed delivery in parallel; a coordinator names the dominant cause, ranked by cash. ${METRICS.overallPct}% accurate across ${METRICS.orders} orders, every figure traced to tested code.`,
 };
 
-function Chip({ children }) {
-  return (
-    <span className="rounded-full border border-hairline bg-surface px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-ink">
-      {children}
-    </span>
-  );
-}
+const HERO_STATS = [
+  {
+    value: METRICS.overallPct,
+    decimals: 1,
+    suffix: "%",
+    label: "Overall attribution accuracy",
+    sub: `Seed ${METRICS.seed} canonical · ${METRICS.orders} orders scored`,
+    accent: true,
+  },
+  {
+    value: ROBUSTNESS_METRICS.meanAmbiguousPct,
+    decimals: 1,
+    suffix: "%",
+    label: "Mean on hard, two-cause orders",
+    sub: `${ROBUSTNESS_METRICS.seedCount} batches · range ${ROBUSTNESS_METRICS.minAmbiguousPct}–${ROBUSTNESS_METRICS.maxAmbiguousPct}%`,
+  },
+  {
+    value: +(METRICS.totalValue / 1_000_000).toFixed(2),
+    decimals: 2,
+    prefix: "AED ",
+    suffix: "M",
+    label: "Failure value attributed",
+    sub: `To the dirham, across all ${METRICS.orders} failed orders`,
+  },
+];
 
-function DriverRail() {
+const ONE_BREATH = [
+  {
+    label: "The company",
+    body: (
+      <>
+        {COMPANY.name} moves about 9,000 products through two UAE warehouses to roughly 3,200
+        delivery points. Fictional company, synthetic data.
+      </>
+    ),
+  },
+  {
+    label: "The problem",
+    body: "When an order lands late or short, four teams each have a reason it was not them. Usually more than one thing went wrong at once.",
+  },
+  {
+    label: "The tool",
+    body: "Four specialist agents investigate every failure in parallel. A coordinator weighs their claims and names the deciding cause, ranked by cash.",
+  },
+];
+
+// coordinate the two range bars in the result section on a shared 0–100 scale
+function RangeBar({ label, min, max, mean, color, muted = false }) {
   return (
-    <div className="rounded-lg border border-hairline bg-surface p-5 shadow-[0_24px_50px_-36px_rgba(20,24,31,0.55)]">
+    <div>
       <div className="flex items-baseline justify-between">
-        <p className="eyebrow">Value at risk by team</p>
-        <span className="tnum text-xs font-semibold text-ink">{fmtAEDm(METRICS.totalValue)}</span>
+        <span className="text-sm font-medium text-ink">{label}</span>
+        <span className="tnum text-sm text-muted">
+          {min}–{max}%
+        </span>
       </div>
-      <ul className="mt-5 space-y-4">
-        {DRIVER_ORDER.map((k) => {
-          const d = DRIVERS[k];
-          return (
-            <li key={k}>
-              <div className="flex items-baseline justify-between text-sm">
-                <span className="font-medium text-ink">{d.label}</span>
-                <span className="tnum text-ink">{fmtAEDk(d.value)}</span>
-              </div>
-              <div className="mt-1.5 flex items-center gap-2.5">
-                <div aria-hidden="true" className="h-1.5 flex-1 overflow-hidden rounded-full bg-hairline">
-                  <div className="h-full rounded-full" style={{ width: `${d.share * 100}%`, backgroundColor: d.color }} />
-                </div>
-                <span className="tnum w-11 text-right text-xs text-muted">{(d.share * 100).toFixed(1)}%</span>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="mt-5 border-t border-hairline pt-3 font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted">
-        Supplier failures cost ~{Math.round(DRIVERS.supplier.perFailure / DRIVERS.logistics.perFailure)}× logistics
-      </p>
+      <div className="relative mt-2 h-2.5 w-full rounded-full bg-hairline" aria-hidden>
+        <div
+          className="absolute inset-y-0 rounded-full"
+          style={{
+            left: `${min}%`,
+            width: `${max - min}%`,
+            backgroundColor: color,
+            opacity: muted ? 0.35 : 0.85,
+          }}
+        />
+        {mean != null && (
+          <div
+            className="absolute inset-y-[-3px] w-[2px] rounded-full"
+            style={{ left: `${mean}%`, backgroundColor: "var(--ink)" }}
+            title={`mean ${mean}%`}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -56,77 +95,146 @@ function DriverRail() {
 export default function Home() {
   return (
     <>
-      {/* hero: the complete 20-second story */}
-      <section className="field-grid border-b border-hairline">
-        <div className="mx-auto w-full max-w-[1200px] px-5 md:px-8">
-          <div className="flex items-center justify-between border-b border-hairline py-3 font-mono text-[10.5px] uppercase tracking-[0.16em] text-muted">
-            <span>Case file · {COMPANY.caseId}</span>
-            <span>Fictional company · synthetic data</span>
+      {/* ===== HERO: the complete 20-second story ===== */}
+      <section className="relative overflow-hidden border-b border-hairline">
+        <div aria-hidden className="field-grid field-grid-fade absolute inset-0" />
+        <div className="relative mx-auto w-full max-w-[1200px] px-5 md:px-8">
+          {/* telemetry strip */}
+          <div className="flex items-center justify-between border-b border-hairline py-3 font-mono text-[10.5px] uppercase tracking-[0.16em] text-faint">
+            <span>Case {COMPANY.caseId} · {COMPANY.short} Distribution</span>
+            <span className="hidden sm:inline">Fictional company · synthetic data</span>
           </div>
 
-          <div className="grid items-center gap-12 pt-12 pb-10 md:grid-cols-12 md:pt-16 md:pb-14">
-            <div className="md:col-span-7">
-              <p className="eyebrow">{COMPANY.name} · {COMPANY.kind} · {COMPANY.region}</p>
-              <h1 className="mt-5 text-balance text-[2rem] font-bold leading-[1.06] tracking-tight sm:text-[2.5rem] md:text-[3.1rem]">
+          <div className="max-w-4xl pt-14 md:pt-20">
+            <Reveal>
+              <Kicker>Multi-agent failure attribution</Kicker>
+              <h1 className="mt-5 text-balance text-[2.1rem] font-bold leading-[1.04] tracking-[-0.02em] sm:text-[2.7rem] md:text-[3.35rem]">
                 When a delivery fails, four teams blame each other.{" "}
-                <span className="text-accent">This finds who&rsquo;s right.</span>
+                <span className="text-accent">This names who&rsquo;s right, ranked by cash.</span>
               </h1>
-              <p className="mt-6 max-w-[580px] text-[1.12rem] leading-relaxed text-muted">
-                The engine reads every failed delivery and names the team that actually caused it,
-                ranked by how much money each cause is costing, in seconds, with the evidence attached.
+              <p className="mt-6 max-w-[620px] text-lg leading-relaxed text-muted">
+                Four specialist agents investigate every failed order in parallel. A coordinator weighs
+                their competing claims and names the deciding cause, in seconds, with the evidence attached.
               </p>
-              <div className="mt-7 flex flex-wrap gap-2">
-                <Chip>{METRICS.overallPct}% accuracy</Chip>
-                <Chip>{fmtAEDm(METRICS.totalValue)} attributed</Chip>
-                <Chip>+{METRICS.liftPct} pts vs a simple rule</Chip>
-                <Chip>Evidence attached</Chip>
-              </div>
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Link href="/live" className="rounded-md bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110">
-                  Run it live
-                </Link>
-                <Link href="/how-it-works" className="rounded-md border border-hairline bg-surface px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink/30">
+                <Button href="/live">Run it live</Button>
+                <Button href="/how-it-works" variant="ghost">
                   See how it works
-                </Link>
+                </Button>
               </div>
-            </div>
-
-            <div className="md:col-span-5">
-              <DriverRail />
-            </div>
+            </Reveal>
           </div>
 
-          <div className="pb-16 md:pb-20">
-            <p className="eyebrow mb-3">The live attribution pipeline</p>
-            <PipelineConsole />
+          {/* three hero numbers */}
+          <Reveal delay={0.1}>
+            <div className="reg mt-14 grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:mt-16 md:grid-cols-3">
+              {HERO_STATS.map((s) => (
+                <div key={s.label} className="bg-surface px-6 py-8 md:px-8 md:py-9">
+                  <Stat
+                    value={s.value}
+                    decimals={s.decimals}
+                    prefix={s.prefix}
+                    suffix={s.suffix}
+                    label={s.label}
+                    sub={s.sub}
+                    accent={s.accent}
+                    size="lg"
+                  />
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          {/* signature: the live attribution pipeline */}
+          <div className="py-16 md:py-24">
+            <Reveal className="mb-4">
+              <Kicker>The live attribution pipeline</Kicker>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <PipelineConsole />
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* plain-language explainer */}
-      <ExplainerSection />
-
-      {/* proof band */}
-      <section className="mx-auto w-full max-w-[1200px] px-5 py-16 md:px-8 md:py-20">
-        <p className="eyebrow mb-3">Measured, not asserted</p>
-        <p className="mb-8 max-w-[720px] text-lg leading-relaxed text-muted">
-          {COMPANY.short}&rsquo;s <span className="font-semibold text-ink">{METRICS.orders} failed orders</span> in one
-          period carried <span className="tnum font-semibold text-ink">{fmtAED(METRICS.totalValue)}</span> at risk. The
-          engine attributed every one, scored against a known answer, not asserted.
-        </p>
-        <StatStrip />
-        <p className="mt-5 text-center font-mono text-xs text-muted">
-          Every figure is computed by deterministic, tested code. None is written by the model.
-        </p>
-      </section>
-
-      {/* about the company (fictional + synthetic, full profile) */}
-      <section className="border-t border-hairline bg-surface">
-        <div className="mx-auto w-full max-w-[1200px] px-5 py-16 md:px-8 md:py-20">
-          <CompanyProfile />
+      {/* ===== WHO / WHAT, in one breath ===== */}
+      <section className="border-b border-hairline bg-surface">
+        <div className="mx-auto max-w-[1200px] px-5 py-16 md:px-8 md:py-20">
+          <Reveal className="mb-8">
+            <Kicker>Who this is for</Kicker>
+          </Reveal>
+          <div className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:grid-cols-3">
+            {ONE_BREATH.map((item, i) => (
+              <Reveal key={item.label} delay={i * 0.06} className="bg-surface">
+                <div className="h-full px-6 py-7 md:px-8 md:py-8">
+                  <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.16em] text-accent">
+                    {item.label}
+                  </p>
+                  <p className="mt-3 text-[15px] leading-relaxed text-ink">{item.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.1} className="mt-8">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <span className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-faint">
+                The four suspects
+              </span>
+              <DriverLegend />
+            </div>
+          </Reveal>
         </div>
       </section>
 
+      {/* ===== THE RESULT: robustness-verified headline ===== */}
+      <section className="border-b border-hairline">
+        <div className="mx-auto max-w-[1200px] px-5 py-20 md:px-8 md:py-28">
+          <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+            <SectionHeader
+              kicker={`Verified across ${ROBUSTNESS_METRICS.seedCount} batches`}
+              title="The win shows up where the problem is actually hard."
+              intro="Anyone can call the easy orders. The test is the hard ones, where two real causes fire at once. There, across six independently generated batches, the coordinator holds a wide margin over the naive rule that just blames the biggest number."
+            />
+            <Reveal delay={0.1}>
+              <div className="reg rounded-xl border border-hairline bg-surface p-6 shadow-[var(--shadow-panel)] md:p-8">
+                <div className="flex items-baseline justify-between">
+                  <Stat
+                    value={ROBUSTNESS_METRICS.meanAmbiguousPct}
+                    decimals={1}
+                    suffix="%"
+                    accent
+                    size="md"
+                  />
+                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-faint">
+                    mean · hard orders
+                  </span>
+                </div>
+                <div className="mt-8 space-y-5">
+                  <RangeBar
+                    label="Coordinator"
+                    min={ROBUSTNESS_METRICS.minAmbiguousPct}
+                    max={ROBUSTNESS_METRICS.maxAmbiguousPct}
+                    mean={ROBUSTNESS_METRICS.meanAmbiguousPct}
+                    color="var(--accent)"
+                  />
+                  <RangeBar
+                    label="Naive &ldquo;biggest number&rdquo; rule"
+                    min={ROBUSTNESS_METRICS.naiveMinPct}
+                    max={ROBUSTNESS_METRICS.naiveMaxPct}
+                    color="var(--muted)"
+                    muted
+                  />
+                </div>
+                <p className="mt-6 border-t border-hairline pt-4 font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
+                  Black tick marks the mean · full six-seed table on the results page
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ROUTE CARDS ===== */}
       <RouteCards />
     </>
   );

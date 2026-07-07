@@ -13,11 +13,11 @@ export default function LivePage() {
   return (
     <>
       <PageHero
-        eyebrow="§04 · Run It Live"
+        kicker="§04 · Run It Live"
         title="Run the engine on a live batch."
-        lede="OTIF means On Time, In Full. This runs the four AI investigators, one for each team that could be at fault, plus the coordinator that makes the final call, on a batch of failed orders, and shows which team caused each one and what it cost."
+        lede="This runs the four AI investigators, one for each team that could be at fault, plus the coordinator that makes the final call, on a batch of failed orders, and shows which team caused each one and what it cost."
       />
-      <div className="mx-auto max-w-[1120px] px-6 pt-12 md:pt-14">
+      <div className="mx-auto max-w-[1200px] px-5 pt-12 md:px-8 md:pt-14">
         <SampleData />
       </div>
       <LiveConsole />

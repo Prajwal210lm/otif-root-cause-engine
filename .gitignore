@@ -27,3 +27,5 @@ frontend/scripts/screenshots/
 Thumbs.db
 .idea/
 .vscode/
+
+.vercel

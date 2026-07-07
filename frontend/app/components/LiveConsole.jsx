@@ -33,7 +33,7 @@ function FreshRunProgress() {
   for (const s of RUN_STAGES) if (elapsed >= s.at) stage = s;
 
   return (
-    <div className="border-b border-hairline bg-canvas px-5 py-3 md:px-7">
+    <div className="border-b border-hairline bg-raised px-5 py-3 md:px-7">
       <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
         <span className="flex items-center gap-1.5">
           {reduce ? (
@@ -173,15 +173,19 @@ export default function LiveConsole() {
   const noHardOrders = data.nAmbiguous === 0;
 
   return (
-    <section id="console" className="mx-auto max-w-[1120px] px-6 pt-8 pb-20">
-      <div className="overflow-hidden rounded-xl border border-hairline bg-surface">
+    <section id="console" className="mx-auto max-w-[1200px] px-5 pt-8 pb-20 md:px-8">
+      <div className="overflow-hidden rounded-xl border border-hairline bg-surface shadow-[var(--shadow-panel)]">
         {/* control bar */}
         <div className="flex flex-col gap-4 border-b border-hairline px-5 py-4 md:flex-row md:items-center md:justify-between md:px-7">
           <div className="flex flex-wrap items-center gap-3">
-            <span className={`rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] ${source === "fresh" ? "bg-accent text-white" : "border border-hairline text-muted"}`}>
+            <span
+              className={`rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] ${
+                source === "fresh" ? "bg-accent text-white" : "border border-hairline-strong text-muted"
+              }`}
+            >
               {source === "fresh" ? "fresh run" : "saved result · standard batch"}
             </span>
-            <span className="tnum font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+            <span className="tnum font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
               seed {data.seed} · n={data.n}
             </span>
           </div>
@@ -189,7 +193,9 @@ export default function LiveConsole() {
           {backendUp && (
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               {errKind && <span className="text-xs text-muted">{ERROR_COPY[errKind]}</span>}
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-muted">Takes about 30 seconds · new random batch</span>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
+                Takes about 30 seconds · new random batch
+              </span>
               <button
                 onClick={runFresh}
                 disabled={usedFresh || status === "running"}
@@ -207,7 +213,7 @@ export default function LiveConsole() {
         <div className="grid gap-px bg-hairline md:grid-cols-2">
           <div className="bg-surface p-5 md:p-7">
             <div className="flex items-baseline justify-between">
-              <p className="eyebrow">Which team, by money</p>
+              <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted">Which team, by money</p>
               <span className="tnum text-sm font-semibold text-ink">{fmtAED(data.totalValue)}</span>
             </div>
             <ul className="mt-5 space-y-4">
@@ -232,7 +238,7 @@ export default function LiveConsole() {
           </div>
 
           <div className="bg-surface p-5 md:p-7">
-            <p className="eyebrow">How often it was right</p>
+            <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted">How often it was right</p>
             <div className="mt-5 grid grid-cols-3 gap-4">
               <Metric label="Overall" value={pct(data.overall) ?? "n/a"} accent />
               <Metric label="Easy orders" value={pct(data.clean) ?? "n/a"} />
@@ -258,12 +264,14 @@ export default function LiveConsole() {
           </div>
         </div>
 
-        <div className="border-t border-hairline bg-canvas px-5 py-5 md:px-7">
-          <p className="eyebrow">What the engine says it could not establish</p>
+        <div className="border-t border-hairline bg-raised px-5 py-5 md:px-7">
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted">
+            What the engine says it could not establish
+          </p>
           <ul className="mt-3 max-w-[860px] space-y-2">
             {data.limits.split(/(?<=\.)\s+(?=[A-Z])/).map((sentence, i) => (
               <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-muted">
-                <span aria-hidden className="mt-[8px] h-1 w-1 shrink-0 rounded-full bg-muted/60" />
+                <span aria-hidden className="mt-[8px] h-1 w-1 shrink-0 rounded-full bg-faint" />
                 <span>{sentence}</span>
               </li>
             ))}
@@ -277,8 +285,10 @@ export default function LiveConsole() {
 function Metric({ label, value, accent }) {
   return (
     <div>
-      <div className={`tnum text-xl font-bold leading-none md:text-2xl ${accent ? "text-accent" : "text-ink"}`}>{value}</div>
-      <div className="eyebrow mt-2">{label}</div>
+      <div className={`tnum text-xl font-bold leading-none tracking-[-0.01em] md:text-2xl ${accent ? "text-accent" : "text-ink"}`}>
+        {value}
+      </div>
+      <div className="mt-2 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-faint">{label}</div>
     </div>
   );
 }

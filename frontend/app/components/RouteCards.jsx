@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
+import SectionHeader from "./SectionHeader";
 import { METRICS, fmtAEDm } from "../lib/otif";
 
 const ROUTES = [
@@ -13,24 +14,27 @@ export default function RouteCards() {
   return (
     <section className="border-t border-hairline bg-surface">
       <div className="mx-auto max-w-[1200px] px-5 py-20 md:px-8 md:py-28">
-        <Reveal>
-          <p className="eyebrow">Go deeper</p>
-          <h2 className="mt-4 text-balance text-[1.9rem] font-bold leading-[1.08] tracking-tight md:text-[2.5rem]">
-            Read the case file.
-          </h2>
-          <p className="mt-5 max-w-[600px] text-lg leading-relaxed text-muted">
-            Everything above is the whole story in one screen. Each section opens into the evidence.
-            Pick your depth.
-          </p>
-        </Reveal>
+        <SectionHeader
+          kicker="Go deeper"
+          title="Read the case file."
+          intro="Everything on this page is the whole story in one screen. Each section opens into the evidence. Pick your depth."
+        />
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:grid-cols-2">
           {ROUTES.map((r, i) => (
             <Reveal key={r.href} delay={i * 0.06} className="bg-surface">
-              <Link href={r.href} className="group block h-full p-7 transition-colors hover:bg-canvas md:p-9">
+              <Link
+                href={r.href}
+                className="group relative block h-full p-7 transition-colors hover:bg-canvas md:p-9"
+              >
                 <div className="flex items-center justify-between">
                   <span className="tnum text-sm font-semibold text-accent">§{r.n}</span>
-                  <span aria-hidden className="text-lg text-muted transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent">→</span>
+                  <span
+                    aria-hidden
+                    className="text-lg text-faint transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent"
+                  >
+                    →
+                  </span>
                 </div>
                 <h3 className="mt-6 text-xl font-semibold text-ink">{r.title}</h3>
                 <p className="mt-2 max-w-[420px] text-[15px] leading-relaxed text-muted">{r.body}</p>
