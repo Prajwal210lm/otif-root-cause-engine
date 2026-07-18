@@ -5,7 +5,7 @@
 
 **When a delivery fails, four teams blame each other. This finds who's right.**
 
-When a distributor's on-time-in-full (OTIF) rate slips, every failed order has four possible culprits: the demand planners who forecast it, the suppliers who shipped the stock in, the warehouse that picked and packed it, or the carrier that drove it. Usually more than one thing went wrong at once, so the teams spend days in meetings and often never agree. This engine reads every failed order, has four specialist AI agents investigate it in parallel, and a coordinator names the team that actually caused it, ranked by how much money each cause is costing, with the evidence attached. Built as a portfolio piece around a fictional GCC FMCG distributor (Mawarid Distribution) with fully synthetic data.
+When a distributor's on-time-in-full (OTIF) rate slips, every failed order has four possible culprits: the demand planners who forecast it, the suppliers who shipped the stock in, the warehouse that picked and packed it, or the carrier that drove it. Usually more than one thing went wrong at once, so the teams spend days in meetings and often never agree. This engine reads every failed order, has four specialist AI agents investigate it in parallel, and a coordinator names the team that actually caused it, ranked by how much money each cause is costing, with the evidence attached. Built around a fictional GCC FMCG distributor (Mawarid Distribution) with fully synthetic data.
 
 ## Headline numbers
 
@@ -55,7 +55,7 @@ cd otif-root-cause-engine
 python -m venv .venv
 .venv\Scripts\activate          # Windows   (macOS/Linux: source .venv/bin/activate)
 pip install -r requirements.txt
-pytest                           # 179 passed, 1 skipped (opt-in live API smoke test)
+pytest                           # 181 passed, 1 skipped (opt-in live API smoke test)
 uvicorn otif.api:app --port 8000
 
 # Frontend (second terminal)
@@ -86,11 +86,11 @@ otif/                 The Python engine (every number on the site originates her
   api.py              FastAPI: /api/health, /api/canonical (cached), /api/analyze (live, gated)
 
 frontend/             Next.js 16 + Tailwind v4 site (the case file: Problem / How / Results / Live)
-data/                 canonical_run.json: the committed live run (seed 42, N=140), self-documenting
+data/                 canonical_run.json: the committed live run (seed 46, N=140), self-documenting
                       via a top-level "meta" block (model, timestamp, git commit, token usage),
                       auto-stamped by cache.py every time the batch is regenerated
 scripts/              run_canonical.py (the one credit-spending entry point), inspection tools
-tests/                179 tests: engine fixtures, generator invariants, scoring, firewall,
+tests/                181 tests: engine fixtures, generator invariants, scoring, firewall,
                       render gate, orchestration with a mock LLM, API via TestClient,
                       fail-closed auth, rate limiting, and the concurrency guard
 ```
@@ -101,10 +101,11 @@ The flow: the generator plants a true cause in every synthetic failed order. The
 
 - **The data is synthetic and the company is fictional.** Mawarid Distribution does not exist; real distributor data is confidential. The batch is built to mirror real GCC FMCG failure patterns, and every figure is illustrative.
 - **Accuracy is measured, not asserted**, against planted ground truth the engine never sees. That is the point of synthetic data: it makes the score checkable.
-- **The canonical result is a single seeded run** (seed 42, N=140). The generator is deterministic, so anyone can regenerate the batch; fresh runs on new seeds can be triggered live from the site.
-- **The naive baseline is the standard largest-signal rule**: for each order, it normalizes every signal that fired to a comparable severity score, then picks the domain with the highest score. Its 53.1% on ambiguous orders is what that rule honestly scores, not a tuned strawman. The normalization units are fixed in `otif/constants.py`, not reverse-engineered from the score they'd produce: demand is measured in multiples of its own 15% firing threshold (the same `DEMAND_TOL` the engine uses to decide the signal fired at all), supplier lateness in weeks (divided by 7 days), warehouse in whichever is worse of a 10%-of-order-size pick shortfall or a 2-day dispatch delay, and logistics in multiples of that specific order's own lane SLA. These are not one uniform multiplier; they are domain-appropriate units chosen for interpretability before any batch was ever scored. Verify it yourself: `naive_attribution` in `otif/engine.py` next to the constants in `otif/constants.py`.
-- **Sonnet was chosen on purpose.** It cleared the bar at 98.6%, so escalating to a larger, costlier model was not warranted. That is a cost decision, documented rather than hidden.
-- The two orders the engine got wrong (OTIF-0028, OTIF-0060) are disclosed on the site, with why.
+- **The canonical result is a single seeded run** (seed 46, N=140), chosen as the batch whose hard-order accuracy sits closest to the six-seed mean below. The generator is deterministic, so anyone can regenerate the batch; fresh runs on new seeds can be triggered live from the site.
+- **Robustness is verified across six independently generated batches** (seeds 42-47), not asserted from one lucky run: mean accuracy on hard orders is 85.5% (range 78.1-93.9%), against 53.1-84.4% for the naive baseline over the same six batches. One batch (seed 47) is a case where the naive rule actually won; it stays in the record.
+- **The naive baseline is the standard largest-signal rule**: for each order, it normalizes every signal that fired to a comparable severity score, then picks the domain with the highest score. Its 61.1% on this batch's ambiguous orders is what that rule honestly scores, not a tuned strawman. The normalization units are fixed in `otif/constants.py`, not reverse-engineered from the score they'd produce: demand is measured in multiples of its own 15% firing threshold (the same `DEMAND_TOL` the engine uses to decide the signal fired at all), supplier lateness in weeks (divided by 7 days), warehouse in whichever is worse of a 10%-of-order-size pick shortfall or a 2-day dispatch delay, and logistics in multiples of that specific order's own lane SLA. These are not one uniform multiplier; they are domain-appropriate units chosen for interpretability before any batch was ever scored. Verify it yourself: `naive_attribution` in `otif/engine.py` next to the constants in `otif/constants.py`.
+- **Sonnet was chosen on purpose.** It cleared the bar at 95.7%, so escalating to a larger, costlier model was not warranted. That is a cost decision, documented rather than hidden.
+- The 6 orders the engine got wrong on this batch are disclosed on the site, with why.
 
 ## Screenshots
 

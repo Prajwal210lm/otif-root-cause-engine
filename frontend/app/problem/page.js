@@ -4,6 +4,7 @@ import SectionHeader from "../components/SectionHeader";
 import Reveal from "../components/Reveal";
 import Kicker from "../components/Kicker";
 import OtifGap from "../components/OtifGap";
+import WarRoomCard from "../components/WarRoomCard";
 import { FictionalLabel, CompanyProfile } from "../components/DataNote";
 import { COMPANY } from "../lib/company";
 
@@ -18,13 +19,6 @@ const SUSPECTS = [
   { color: "var(--supplier)", name: "Supplier", role: "shipped the stock in" },
   { color: "var(--warehouse)", name: "Warehouse", role: "picked and packed it" },
   { color: "var(--logistics)", name: "Logistics", role: "drove it to the door" },
-];
-
-const CLAIMS = [
-  { who: "Planning", says: "Supply came in late. That is on procurement.", color: "var(--supplier)" },
-  { who: "Procurement", says: "The forecast under-called it. We ordered to plan.", color: "var(--demand)" },
-  { who: "Warehouse", says: "We picked and shipped exactly what the system showed.", color: "var(--warehouse)" },
-  { who: "Logistics", says: "The lane ran inside SLA. Not a transit problem.", color: "var(--logistics)" },
 ];
 
 export default function ProblemPage() {
@@ -48,7 +42,7 @@ export default function ProblemPage() {
               <>
                 <span className="font-semibold text-ink">OTIF, short for On Time In Full,</span> is the
                 share of orders that arrive on the promised day with every item, nothing missing.{" "}
-                {COMPANY.short} runs about {COMPANY.otifNow}%; the board wants {COMPANY.otifTarget}%.
+                {COMPANY.short} (fictional) runs about {COMPANY.otifNow}%; the board wants {COMPANY.otifTarget}%.
                 Closing that gap means knowing why the failures happen.
               </>
             }
@@ -100,26 +94,7 @@ export default function ProblemPage() {
 
           <div className="mt-12 grid items-start gap-6 lg:grid-cols-12">
             <Reveal className="lg:col-span-7">
-              <figure className="reg rounded-xl border border-hairline bg-surface p-6 shadow-[var(--shadow-panel)] md:p-8">
-                <figcaption>
-                  <Kicker>Tuesday 09:00 · the weekly OTIF review</Kicker>
-                </figcaption>
-                <ul className="mt-6 space-y-4">
-                  {CLAIMS.map((c) => (
-                    <li key={c.who} className="flex gap-3">
-                      <span aria-hidden className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: c.color }} />
-                      <p className="text-[15px] leading-snug text-ink">
-                        <span className="font-semibold">{c.who}:</span>{" "}
-                        <span className="text-muted">&ldquo;{c.says}&rdquo;</span>
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6 flex items-center justify-between border-t border-hairline pt-4">
-                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-faint">Outcome</span>
-                  <span className="text-sm font-semibold text-ink">Meeting adjourned. No agreed cause.</span>
-                </div>
-              </figure>
+              <WarRoomCard />
             </Reveal>
 
             <div className="space-y-6 lg:col-span-5">

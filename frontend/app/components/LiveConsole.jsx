@@ -193,16 +193,24 @@ export default function LiveConsole() {
           {backendUp && (
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               {errKind && <span className="text-xs text-muted">{ERROR_COPY[errKind]}</span>}
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
-                Takes about 30 seconds · new random batch
-              </span>
-              <button
-                onClick={runFresh}
-                disabled={usedFresh || status === "running"}
-                className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45"
-              >
-                {status === "running" ? "Running…" : usedFresh ? "Fresh run used" : "Run a fresh analysis"}
-              </button>
+              {!usedFresh && (
+                <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
+                  Takes about 30 seconds · new random batch
+                </span>
+              )}
+              {usedFresh ? (
+                <span className="max-w-[360px] text-sm leading-snug text-muted">
+                  One run per visitor, live model calls bill by the token, and I&rsquo;m the one paying :)
+                </span>
+              ) : (
+                <button
+                  onClick={runFresh}
+                  disabled={status === "running"}
+                  className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {status === "running" ? "Running…" : "Run a fresh analysis"}
+                </button>
+              )}
             </div>
           )}
         </div>

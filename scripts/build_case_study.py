@@ -359,11 +359,12 @@ ec.width = CONTENT_W
 shade(ec, "F4F6F8")
 set_cell_margins(ec, top=140, bottom=140, left=160, right=160)
 pp = cell_para(ec, after=3)
-run(pp, "The supplier ran 10 days late; the warehouse was 2 days slow. ", 10, bold=True, color=INK)
-run(pp, "The simple rule picks the biggest single signal and blames the warehouse. Wrong. ", 10, color=INK)
+run(pp, "The supplier's PO ran 6 days late; the warehouse dispatch was 2 days slow with a pick short. ", 10, bold=True, color=INK)
+run(pp, "The simple rule picks the louder single signal and blames the supplier. Wrong. ", 10, color=INK)
 pp2 = cell_para(ec, after=0, before=0)
-run(pp2, "The coordinator reasons that the late PO alone would have closed the shortfall had it arrived "
-        "on time, so it names the supplier as the deciding cause. Correct, and it shows the reasoning.",
+run(pp2, "The coordinator reasons that stock was physically on hand, so the late PO did not starve the "
+        "pick; warehouse execution bound the outcome. It names the warehouse as the deciding cause. "
+        "Correct, and it shows the reasoning.",
     10, color=INK)
 
 # tech + disclaimer

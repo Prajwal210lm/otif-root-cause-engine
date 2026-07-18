@@ -15,7 +15,7 @@ const TOOLS = [
   { name: "Liquidity Lens", href: "https://supply-chain-liquidity-lens.vercel.app", status: "live", desc: "finds cash trapped in the wrong inventory and says what to sell down first." },
   { name: "Supplier Resilience Radar", href: "https://supplier-resilience-radar.vercel.app", status: "live", desc: "flags which suppliers are risky before a shipment fails." },
   { name: "OTIF Root-Cause Engine", href: "/", status: "this one", desc: "finds why deliveries fail and what each cause costs." },
-  { name: "Project four", href: null, status: "in progress", desc: "ask the supply chain questions in plain English, get grounded answers with a chart." },
+  { name: "Supply Chain Copilot", href: "https://supply-chain-copilot-nine.vercel.app", status: "live", desc: "ask the supply chain a question in plain English, get a grounded answer with the query shown." },
 ];
 
 const GITHUB_URL = "https://github.com/Prajwal210lm/otif-root-cause-engine";
@@ -30,7 +30,7 @@ export default function SiteFooter() {
             <Wordmark full />
             <p className="mt-6 max-w-[460px] text-[15px] leading-relaxed text-muted">
               The third of four tools I built to show how AI can solve real supply-chain problems for
-              a Gulf distributor. Each one solves a different problem.
+              Gulf supply chains. Each one solves a different problem.
             </p>
             <p className="mt-6 text-base font-semibold text-ink">Built to be defensible line by line.</p>
           </div>
