@@ -199,8 +199,9 @@ export default function LiveConsole() {
                 </span>
               )}
               {usedFresh ? (
-                <span className="max-w-[360px] text-sm leading-snug text-muted">
-                  One run per visitor, live model calls bill by the token, and I&rsquo;m the one paying :)
+                <span className="max-w-[440px] text-sm leading-snug text-muted">
+                  Live run complete. Every run generates a fresh result by calling a real AI model,
+                  which costs real money per call. One per visitor keeps this free for everyone.
                 </span>
               ) : (
                 <button
