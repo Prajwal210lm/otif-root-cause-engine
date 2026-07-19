@@ -31,6 +31,26 @@ const NAIVE_ITEM = {
   body: "It is the standard largest-signal rule: normalize every signal that fired to a comparable severity score, then pick the domain with the highest one. The normalization units are fixed in the code, not chosen after seeing the score: demand in multiples of its own 15% forecast-error threshold, supplier lateness in weeks, warehouse in whichever is worse of a 10%-of-order pick shortfall or a 2-day dispatch delay, and logistics in multiples of that order's own lane SLA. A skeptic can read naive_attribution next to the constants file and check the units were fixed before any batch was scored.",
 };
 
+const BOUNDARY_ITEM = {
+  n: "06",
+  title: "Scoped to cause, not queries",
+  body: (
+    <>
+      This is a root-cause engine, not a query tool. It investigates why a failure happened. For
+      the daily question, &ldquo;what happened to OTIF last month,&rdquo; that is{" "}
+      <a
+        href="https://supply-chain-copilot-nine.vercel.app/"
+        target="_blank"
+        rel="noreferrer"
+        className="font-medium text-ink underline decoration-hairline-strong underline-offset-2 transition-colors hover:text-accent hover:decoration-accent"
+      >
+        Project 4
+      </a>
+      &rsquo;s job.
+    </>
+  ),
+};
+
 export default function ScopeSection() {
   return (
     <section id="scope" className="border-b border-hairline">
@@ -60,6 +80,15 @@ export default function ScopeSection() {
                 <h3 className="text-base font-semibold text-ink">{NAIVE_ITEM.title}</h3>
               </div>
               <p className="mt-3 max-w-[860px] text-sm leading-relaxed text-muted">{NAIVE_ITEM.body}</p>
+            </div>
+          </Reveal>
+          <Reveal delay={(ITEMS.length + 1) * 0.06} className="bg-surface sm:col-span-2">
+            <div className="h-full p-6 md:p-7">
+              <div className="flex items-baseline gap-3">
+                <span className="tnum text-sm font-semibold text-accent">{BOUNDARY_ITEM.n}</span>
+                <h3 className="text-base font-semibold text-ink">{BOUNDARY_ITEM.title}</h3>
+              </div>
+              <p className="mt-3 max-w-[860px] text-sm leading-relaxed text-muted">{BOUNDARY_ITEM.body}</p>
             </div>
           </Reveal>
         </div>
