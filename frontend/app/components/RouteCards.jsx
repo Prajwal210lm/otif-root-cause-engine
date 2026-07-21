@@ -56,7 +56,7 @@ export default function RouteCards() {
               </p>
               <Link
                 href="/live"
-                className="mt-6 inline-flex w-fit items-center gap-2 rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-accent transition hover:bg-white/90"
+                className="mt-6 inline-flex w-fit items-center gap-2 rounded-md bg-white px-4 py-3 text-sm font-semibold text-accent transition hover:bg-white/90"
               >
                 Run a fresh analysis
                 <span aria-hidden>→</span>

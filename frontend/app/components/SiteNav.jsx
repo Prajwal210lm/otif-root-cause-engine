@@ -53,7 +53,7 @@ export default function SiteNav() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label="Toggle navigation"
-            className="flex h-9 w-9 items-center justify-center rounded-md border border-hairline text-ink md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-md border border-hairline text-ink md:hidden"
           >
             <span aria-hidden>{open ? "✕" : "☰"}</span>
           </button>

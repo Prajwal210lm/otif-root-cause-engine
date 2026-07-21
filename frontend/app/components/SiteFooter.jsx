@@ -41,7 +41,7 @@ export default function SiteFooter() {
               {PAGES.map((l) => (
                 <li key={l.href} className="flex items-center gap-3">
                   <span className="tnum text-[11px] text-faint">§{l.n}</span>
-                  <Link href={l.href} className="text-[15px] font-medium text-ink transition-colors hover:text-accent">
+                  <Link href={l.href} className="-my-3 py-3 text-[15px] font-medium text-ink transition-colors hover:text-accent">
                     {l.label}
                   </Link>
                 </li>
@@ -65,7 +65,7 @@ export default function SiteFooter() {
               return (
                 <li key={t.name} className="text-[15px] leading-relaxed">
                   {t.href ? (
-                    <a href={t.href} className="group" target={t.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+                    <a href={t.href} className="group -my-3 inline-block py-3" target={t.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
                       <span className="transition-colors group-hover:text-accent">{name}</span>
                     </a>
                   ) : (
@@ -80,10 +80,10 @@ export default function SiteFooter() {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-hairline pt-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex gap-6">
-            <a href={GITHUB_URL} className="text-[15px] font-medium text-ink transition-colors hover:text-accent" target="_blank" rel="noreferrer">
+            <a href={GITHUB_URL} className="-my-3 py-3 text-[15px] font-medium text-ink transition-colors hover:text-accent" target="_blank" rel="noreferrer">
               GitHub repository ↗
             </a>
-            <a href={LINKEDIN_URL} className="text-[15px] font-medium text-ink transition-colors hover:text-accent" target="_blank" rel="noreferrer">
+            <a href={LINKEDIN_URL} className="-my-3 py-3 text-[15px] font-medium text-ink transition-colors hover:text-accent" target="_blank" rel="noreferrer">
               LinkedIn ↗
             </a>
           </div>

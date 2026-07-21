@@ -2,6 +2,48 @@ import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 import { ROBUSTNESS_SEEDS, ROBUSTNESS_METRICS } from "../lib/otif";
 
+// Below `sm` the five-column table doesn't fit without a horizontal scroll a
+// reader has no reason to discover, and the naive-rule/lift columns are the
+// whole point of this section. So under sm it renders as one card per seed
+// with every figure visible up front; sm and up keeps the table, now with a
+// scroll-shadow edge as a safety net at in-between widths.
+function SeedCard({ s }) {
+  const highlight = s.isCanonical ? "border-accent/30 bg-accent-tint/60" : s.liftPct < 0 ? "border-supplier/25 bg-supplier/[0.05]" : "border-hairline bg-surface";
+  return (
+    <div className={`rounded-lg border p-4 ${highlight}`}>
+      <div className="flex items-center gap-2">
+        <span className="tnum text-sm font-semibold text-ink">Seed {s.seed}</span>
+        {s.isCanonical && (
+          <span className="rounded-full border border-accent/30 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-accent">
+            canonical
+          </span>
+        )}
+      </div>
+      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5">
+        <div>
+          <dt className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-faint">Overall</dt>
+          <dd className="tnum mt-0.5 text-sm text-ink">{s.overallPct}%</dd>
+        </div>
+        <div>
+          <dt className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-faint">Hard orders</dt>
+          <dd className="tnum mt-0.5 text-sm font-semibold text-ink">{s.ambiguousPct}%</dd>
+        </div>
+        <div>
+          <dt className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-faint">Simple rule</dt>
+          <dd className="tnum mt-0.5 text-sm text-muted">{s.naivePct}%</dd>
+        </div>
+        <div>
+          <dt className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-faint">Lift</dt>
+          <dd className={`tnum mt-0.5 text-sm font-semibold ${s.liftPct < 0 ? "text-supplier" : "text-ink"}`}>
+            {s.liftPct >= 0 ? "+" : ""}
+            {s.liftPct}
+          </dd>
+        </div>
+      </dl>
+    </div>
+  );
+}
+
 export default function RobustnessSection() {
   const r = ROBUSTNESS_METRICS;
   const canonicalSeed = ROBUSTNESS_SEEDS.find((s) => s.isCanonical)?.seed;
@@ -21,8 +63,18 @@ export default function RobustnessSection() {
           intro="Each batch is generated fresh with different planted causes. The engine has never seen any of them. The accuracy holds, and the one batch where it did not is left in the table, not hidden."
         />
 
-        <Reveal delay={0.08}>
-          <div className="mt-10 overflow-x-auto rounded-xl border border-hairline bg-surface">
+        {/* below sm: one card per seed, every column visible, nothing to discover */}
+        <Reveal delay={0.08} className="mt-10 sm:hidden">
+          <div className="space-y-3">
+            {ROBUSTNESS_SEEDS.map((s) => (
+              <SeedCard key={s.seed} s={s} />
+            ))}
+          </div>
+        </Reveal>
+
+        {/* sm and up: the table, with a scroll-shadow safety net at in-between widths */}
+        <Reveal delay={0.08} className="mt-10 hidden sm:block">
+          <div className="scroll-shadow-x rounded-xl border border-hairline">
             <table className="w-full min-w-[560px] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-hairline text-left">

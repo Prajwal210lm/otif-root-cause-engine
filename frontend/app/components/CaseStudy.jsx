@@ -80,7 +80,7 @@ export default function CaseStudy() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="mt-4 inline-flex items-center gap-2 rounded-md border border-hairline-strong bg-raised px-3.5 py-2 text-sm font-semibold text-ink transition hover:border-ink/30"
+        className="mt-4 inline-flex items-center gap-2 rounded-md border border-hairline-strong bg-raised px-3.5 py-3 text-sm font-semibold text-ink transition hover:border-ink/30"
       >
         {open ? "Hide the reasoning" : "See how each method decided"}
         <span aria-hidden className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}>↓</span>

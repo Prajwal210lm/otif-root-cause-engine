@@ -129,6 +129,28 @@ section[id], main[id] { scroll-margin-top: 5rem; }
   background-size: 40px 40px;
 }
 
+/* scroll-shadow-x: pure-CSS edge fades for a horizontally scrollable container,
+   so an overflow-x-auto element never hides content with zero affordance. Two
+   gradients "travel with" the content (background-attachment: local) to mask
+   the shadow once you've scrolled past that edge; two more stay fixed to the
+   viewport (background-attachment: scroll) as the actual shadow. Needs a solid
+   --shadow-cover to match the container's own background. No JS, no layout
+   change, degrades to a plain scroll container if background-attachment is
+   unsupported. */
+.scroll-shadow-x {
+  --shadow-cover: var(--surface);
+  overflow-x: auto;
+  background-repeat: no-repeat;
+  background-color: var(--shadow-cover);
+  background-image:
+    linear-gradient(to right, var(--shadow-cover) 30%, transparent),
+    linear-gradient(to left, var(--shadow-cover) 30%, transparent) 100% 0,
+    linear-gradient(to right, rgba(20, 24, 31, 0.14), transparent),
+    linear-gradient(to left, rgba(20, 24, 31, 0.14), transparent) 100% 0;
+  background-size: 32px 100%, 32px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
 /* registration / crosshair corner ticks — the forensic-instrument motif.
    Applied to a positioned container; draws four L-shaped marks just inside. */
 .reg::before, .reg::after {

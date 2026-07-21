@@ -207,7 +207,7 @@ export default function LiveConsole() {
                 <button
                   onClick={runFresh}
                   disabled={status === "running"}
-                  className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45"
+                  className="rounded-md bg-accent px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45"
                 >
                   {status === "running" ? "Running…" : "Run a fresh analysis"}
                 </button>
