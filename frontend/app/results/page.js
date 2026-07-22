@@ -16,7 +16,7 @@ export default function ResultsPage() {
   return (
     <>
       <PageHero
-        kicker="§03 · The Results"
+        kicker="03 · The Results"
         title={`${METRICS.overallPct}% right, and it tells you about the ones it got wrong.`}
         lede={`Accuracy measured against a known answer, not asserted. Here is what we tested, what we got, and what it means, then where the ${fmtAEDm(METRICS.totalValue)} actually went.`}
       >

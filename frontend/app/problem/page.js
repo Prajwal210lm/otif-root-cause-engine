@@ -25,7 +25,7 @@ export default function ProblemPage() {
   return (
     <>
       <PageHero
-        kicker="§01 · The Problem"
+        kicker="01 · The Problem"
         title="Four suspects. One failed order."
         lede="When a delivery fails, four teams each have a reason it was not them. Finding the real cause takes days, and often never resolves. Here is why."
       >

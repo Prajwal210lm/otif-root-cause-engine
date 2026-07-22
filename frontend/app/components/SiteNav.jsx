@@ -73,7 +73,7 @@ export default function SiteNav() {
                   }`}
                 >
                   <span>{item.label}</span>
-                  <span className="tnum text-faint">§{item.n}</span>
+                  <span className="tnum text-faint">{item.n}</span>
                 </Link>
               </li>
             ))}

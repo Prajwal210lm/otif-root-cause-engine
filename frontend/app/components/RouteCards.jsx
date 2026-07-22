@@ -27,7 +27,7 @@ export default function RouteCards() {
                 className="group relative block h-full p-7 transition-colors hover:bg-canvas md:p-9"
               >
                 <div className="flex items-center justify-between">
-                  <span className="tnum text-sm font-semibold text-accent">§{r.n}</span>
+                  <span className="tnum text-sm font-semibold text-accent">{r.n}</span>
                   <span aria-hidden className="text-lg text-faint transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent">→</span>
                 </div>
                 <h3 className="mt-6 text-xl font-semibold text-ink">{r.title}</h3>
@@ -40,7 +40,7 @@ export default function RouteCards() {
           <Reveal delay={ROUTES.length * 0.06} className="bg-accent">
             <div className="relative flex h-full flex-col p-7 md:p-9">
               <div className="flex items-center justify-between">
-                <span className="tnum text-sm font-semibold text-white/70">§04</span>
+                <span className="tnum text-sm font-semibold text-white/70">04</span>
                 <span aria-hidden className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/70">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-accent-soft opacity-70 motion-safe:animate-ping" />

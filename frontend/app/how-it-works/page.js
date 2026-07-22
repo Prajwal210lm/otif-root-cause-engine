@@ -48,7 +48,7 @@ export default function HowItWorksPage() {
   return (
     <>
       <PageHero
-        kicker="§02 · How It Works"
+        kicker="02 · How It Works"
         title="From a failed order to a ranked verdict."
         lede="Four specialist agents investigate in parallel, one for each team that could be at fault. A coordinator makes the final call when they disagree. The plain version first, then the parts that keep the numbers honest."
       />

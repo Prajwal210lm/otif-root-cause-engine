@@ -40,7 +40,7 @@ export default function SiteFooter() {
             <ul className="mt-5 space-y-3">
               {PAGES.map((l) => (
                 <li key={l.href} className="flex items-center gap-3">
-                  <span className="tnum text-[11px] text-faint">§{l.n}</span>
+                  <span className="tnum text-[11px] text-faint">{l.n}</span>
                   <Link href={l.href} className="-my-3 py-3 text-[15px] font-medium text-ink transition-colors hover:text-accent">
                     {l.label}
                   </Link>
